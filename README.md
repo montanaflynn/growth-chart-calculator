@@ -1,6 +1,8 @@
 # growth-chart-calculator
 
-Client-side growth percentile calculator. Converts `(sex, birth date, measurement date, type, value)` into a WHO or CDC percentile and z-score using the LMS method (Cole & Green, 1992). Everything runs in the browser — no data leaves the device.
+Client-side growth percentile calculator. Converts `(sex, birth date, measurement date, type, value)` into a WHO or CDC percentile and z-score using the LMS method (Cole & Green, 1992).
+
+Everything runs in the browser — no data leaves the device.
 
 Live: <https://growthchartcalculator.com>
 
