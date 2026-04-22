@@ -1,0 +1,100 @@
+---
+import Base from "../layouts/Base.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "Baby growth chart (0–24 months) — how to read it",
+      url: "https://growthchartcalculator.com/baby-growth-chart/",
+      description:
+        "What's on a baby growth chart, how to read weight-for-age and length-for-age percentile bands, and what the 3rd, 50th, and 97th lines actually mean.",
+      about: { "@type": "Thing", name: "Infant growth chart" },
+      author: { "@type": "Organization", name: "Growth Chart Calculator" },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Baby growth chart", item: "https://growthchartcalculator.com/baby-growth-chart/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Baby Growth Chart (0–24 months) — Weight and Length Percentiles"
+  description="How to read a baby growth chart. WHO weight-for-age and length-for-age percentile bands explained — what the 3rd, 50th, and 97th lines mean, and when to pay attention."
+  structuredData={structuredData}
+>
+  <article class="landing-intro long-form">
+    <h2>Baby growth chart (0–24 months)</h2>
+    <p>
+      A baby growth chart is a set of percentile curves showing how children of the same age and
+      sex distribute across a measurement — weight, length, or head circumference. For babies
+      under 24 months the chart almost always uses the
+      <a href="/who-growth-chart/">WHO Child Growth Standards</a> (2006), based on ~8,400 healthy
+      infants raised under optimal conditions in six countries.
+    </p>
+    <p>
+      Want your baby's percentile right now?
+      <a href="/baby-percentile-calculator/"><strong>Use the baby percentile calculator</strong></a>
+      — it plots your measurement on the same WHO chart and shows the percentile instantly.
+    </p>
+
+    <h3>What the lines mean</h3>
+    <p>
+      Each curve is a percentile — 3rd, 5th, 10th, 25th, 50th, 75th, 90th, 95th, 97th. If your
+      baby lands on the 50th, half of healthy babies of the same age and sex weigh (or measure)
+      less, and half more. The 50th isn't a target — most babies aren't on it. Anywhere between
+      the 3rd and 97th is considered normal for a healthy infant.
+    </p>
+
+    <h3>Weight-for-age vs length-for-age</h3>
+    <p>
+      WHO publishes separate charts for each measurement. Weight-for-age answers "how heavy is
+      my baby compared to others her age?" Length-for-age answers the same question for length.
+      The two often don't match — a baby can be 20th percentile for weight and 60th for length,
+      which just means she's relatively long-and-lean. That's shape, not a problem.
+    </p>
+
+    <h3>Length, not height</h3>
+    <p>
+      Under 24 months, babies are measured <strong>lying down</strong> (recumbent length) rather
+      than standing up. Standing height is typically 0.5–1 cm shorter than recumbent length on the
+      same child, and the WHO charts assume length. Don't mix the two, or the percentile will
+      read low.
+    </p>
+
+    <h3>Percentile crossing in the first year</h3>
+    <p>
+      Babies frequently cross percentile lines in the first 12–18 months as they "canalize" onto
+      their genetic trajectory — often downward from birth weight (which is strongly influenced by
+      pregnancy) toward their long-term curve. Pediatricians generally pay attention when a baby
+      crosses two or more major percentile bands sustained across several visits. A single low or
+      high reading is almost never meaningful in isolation.
+    </p>
+
+    <h3>WHO chart ages 0–24 months, CDC from 24 months on</h3>
+    <p>
+      WHO's infant charts stop at 60 months, but in practice most US clinics follow WHO strictly
+      only through 24 months, then switch to the
+      <a href="/cdc-growth-chart/">CDC 2000 charts</a> for the rest of childhood. If your baby is
+      over 24 months, start from <a href="/toddler-growth-chart/">the toddler growth chart</a>.
+    </p>
+  </article>
+
+  <RelatedTools
+    links={[
+      { href: "/baby-percentile-calculator/", title: "Baby Percentile Calculator", description: "Plot your baby on the chart" },
+      { href: "/who-growth-chart/", title: "WHO Growth Chart", description: "The reference this chart uses" },
+      { href: "/infant-growth-chart/", title: "Infant growth chart", description: "Clinical framing of the same chart" },
+      { href: "/toddler-growth-chart/", title: "Toddler growth chart", description: "24–60 months" },
+      { href: "/weight-for-age/", title: "Weight-for-age", description: "Weight percentile only" },
+      { href: "/height-for-age/", title: "Length/height-for-age", description: "Length percentile only" },
+    ]}
+  />
+</Base>

@@ -16,6 +16,7 @@ Chart.register(...registerables, annotationPlugin);
 type Theme = "system" | "light" | "dark";
 const THEME_KEY = "growth-app:theme";
 const darkMedia = window.matchMedia("(prefers-color-scheme: dark)");
+const narrowMedia = window.matchMedia("(max-width: 640px)");
 
 function currentTheme(): Theme {
   const saved = localStorage.getItem(THEME_KEY) as Theme | null;
@@ -51,6 +52,9 @@ for (const btn of document.querySelectorAll<HTMLButtonElement>(".theme-toggle bu
 }
 darkMedia.addEventListener("change", () => {
   if (currentTheme() === "system") applyTheme("system");
+});
+narrowMedia.addEventListener("change", () => {
+  if (lastResults.length) renderResults(lastResults);
 });
 
 const form = document.getElementById("calc-form") as HTMLFormElement;
@@ -331,6 +335,8 @@ function drawCharts(
 
   const yLabel = r.measurementType === "weight" ? "Weight (kg)" : "Length / Height (cm)";
   const titleText = `${r.standardUsed.toUpperCase()} ${r.chartKind} (${r.sex})`;
+  const isNarrow = narrowMedia.matches;
+  const inRightHalf = (r.ageMonths - xmin) / (xmax - xmin) > 0.5;
 
   // Screen chart — responsive, follows theme via Chart.defaults.
   const screen = new Chart(screenCanvas, {
@@ -342,7 +348,10 @@ function drawCharts(
       animation: false,
       parsing: false,
       plugins: {
-        legend: { position: "right", labels: { boxWidth: 14, font: { size: 11 } } },
+        legend: {
+          position: isNarrow ? "bottom" : "right",
+          labels: { boxWidth: 14, font: { size: 11 } },
+        },
         title: { display: true, text: titleText },
         tooltip: {
           callbacks: {
@@ -367,7 +376,7 @@ function drawCharts(
             callout: {
               type: "label",
               xValue: r.ageMonths, yValue: r.value,
-              xAdjust: 80, yAdjust: -60,
+              xAdjust: inRightHalf ? -80 : 80, yAdjust: -60,
               content: [
                 `${r.sex}`,
                 `${r.value.toFixed(1)} ${r.unit} @ ${r.ageMonths.toFixed(1)} mo`,

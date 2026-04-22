@@ -1,0 +1,93 @@
+---
+import Base from "../layouts/Base.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "Toddler growth chart (24–60 months) — WHO and CDC percentiles",
+      url: "https://growthchartcalculator.com/toddler-growth-chart/",
+      description:
+        "How the toddler growth chart works from 24 to 60 months, the switch from WHO to CDC at 24 months, and why length becomes stature.",
+      about: { "@type": "Thing", name: "Toddler growth chart" },
+      author: { "@type": "Organization", name: "Growth Chart Calculator" },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Toddler growth chart", item: "https://growthchartcalculator.com/toddler-growth-chart/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Toddler Growth Chart (24–60 months) — Weight and Stature Percentiles"
+  description="How to read a toddler growth chart from 24 to 60 months. Covers the WHO-to-CDC transition at 24 months, length-to-stature switch, and what percentile crossings mean at this age."
+  structuredData={structuredData}
+>
+  <article class="landing-intro long-form">
+    <h2>Toddler growth chart (24–60 months)</h2>
+    <p>
+      From ~24 months onward, two growth-chart conventions diverge — WHO's prescriptive standards
+      continue to 60 months, while most US clinicians switch to the
+      <a href="/cdc-growth-chart/">CDC 2000 growth charts</a> at 24 months. Both describe the same
+      biology, but CDC's percentiles typically read slightly higher than WHO's at this age because
+      CDC reflects the actual US population while WHO reflects optimal growth.
+    </p>
+    <p>
+      To compute a toddler percentile directly, use the
+      <a href="/toddler-percentile-calculator/"><strong>toddler percentile calculator</strong></a>
+      — it defaults to "Auto" (WHO under 24 months, CDC after) and you can switch via the
+      Standard dropdown.
+    </p>
+
+    <h3>Length becomes stature at 24 months</h3>
+    <p>
+      Infant charts measure <em>recumbent length</em> (lying down). From 24 months the child
+      stands, and measurements are <em>stature</em> (standing height). Stature is typically
+      0.5–1 cm shorter than recumbent length on the same child, which is why the chart kind
+      visibly changes at 24 months even though it's continuous in intent.
+    </p>
+
+    <h3>Toddler percentile patterns</h3>
+    <p>
+      By 2 years most children have finished the dramatic canalization of infancy and are
+      tracking along their genetic channel. Crossing percentile lines after 24 months is less
+      common and more informative — a sustained drop of two bands over a year or more is a
+      reason to review growth velocity with a pediatrician, though transient dips around illness
+      or a growth spurt are normal.
+    </p>
+
+    <h3>WHO vs CDC — which to use?</h3>
+    <p>
+      Both are valid in the 24–60 month range. WHO describes how children <em>should</em> grow
+      under optimal conditions; CDC describes how US children <em>did</em> grow between the
+      1960s and 1990s. If your clinician specifies a reference, use that. Otherwise, Auto mode
+      mirrors the most common US clinical convention: WHO under 24 months, CDC after.
+    </p>
+
+    <h3>Weight-for-length to BMI</h3>
+    <p>
+      In the infant chart set, weight-relative-to-length was tracked as weight-for-length (WFL).
+      From ~24 months on, pediatricians use BMI-for-age instead. This calculator doesn't yet
+      include BMI-for-age — if that's what you need, check with your clinician or use the CDC's
+      interactive BMI calculator directly.
+    </p>
+  </article>
+
+  <RelatedTools
+    links={[
+      { href: "/toddler-percentile-calculator/", title: "Toddler Percentile Calculator", description: "Compute percentile + z-score" },
+      { href: "/baby-growth-chart/", title: "Baby growth chart", description: "0–24 months" },
+      { href: "/cdc-growth-chart/", title: "CDC Growth Chart", description: "The reference from 24mo on" },
+      { href: "/who-growth-chart/", title: "WHO Growth Chart", description: "Alternative through 60mo" },
+      { href: "/child-growth-percentile/", title: "Child (5–20y) Percentile", description: "Older children" },
+      { href: "/lms-method/", title: "LMS method", description: "How the math works" },
+    ]}
+  />
+</Base>

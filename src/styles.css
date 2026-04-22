@@ -329,6 +329,12 @@ button[type="submit"]:hover { background: var(--accent-hover); }
   width: 100%;
   aspect-ratio: 16 / 10;
 }
+@media (max-width: 640px) {
+  .chart-wrap {
+    aspect-ratio: 4 / 5;
+    padding-bottom: 8px;
+  }
+}
 .chart-wrap canvas.screen-chart {
   position: absolute;
   inset: 0;

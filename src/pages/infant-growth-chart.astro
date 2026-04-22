@@ -1,0 +1,105 @@
+---
+import Base from "../layouts/Base.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "Infant growth chart — WHO weight-for-age and length-for-age",
+      url: "https://growthchartcalculator.com/infant-growth-chart/",
+      description:
+        "A clinical walkthrough of the infant growth chart: WHO weight-for-age and length-for-age percentiles from 0–24 months, how pediatricians read them, and what z-scores add.",
+      about: { "@type": "Thing", name: "Infant growth chart" },
+      author: { "@type": "Organization", name: "Growth Chart Calculator" },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Infant growth chart", item: "https://growthchartcalculator.com/infant-growth-chart/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Infant Growth Chart — WHO Weight-for-age and Length-for-age (0–24 months)"
+  description="Clinical walkthrough of the infant growth chart — WHO weight-for-age and length-for-age percentiles from 0 to 24 months, how pediatricians read them, and how z-scores complement percentiles."
+  structuredData={structuredData}
+>
+  <article class="landing-intro long-form">
+    <h2>Infant growth chart</h2>
+    <p>
+      The infant growth chart most clinicians use from 0 to 24 months is the
+      <a href="/who-growth-chart/">WHO Child Growth Standards</a> (2006). The same chart is what
+      AAP, NHS, and most national ministries of health recommend for this age range. The version
+      for parents is sometimes called the
+      <a href="/baby-growth-chart/">"baby growth chart"</a> — it's the same underlying LMS data,
+      just with less technical language.
+    </p>
+    <p>
+      To compute your infant's percentile right now, use the
+      <a href="/baby-percentile-calculator/"><strong>baby percentile calculator</strong></a>.
+      It plots your measurement on the WHO chart and shows both the percentile and the z-score.
+    </p>
+
+    <h3>Three infant charts, not one</h3>
+    <ul>
+      <li><strong>Weight-for-age</strong> (WFA) — weight at a given chronological age.</li>
+      <li><strong>Length-for-age</strong> (LFA) — recumbent length at a given age.</li>
+      <li><strong>Weight-for-length</strong> (WFL) — weight conditional on length, not age. Detects wasting/overweight independent of how old the baby is.</li>
+    </ul>
+    <p>
+      This site covers WFA and LFA for 0–24 months. WFL is useful for acute malnutrition screening
+      and is typically tracked separately in clinical practice.
+    </p>
+
+    <h3>Percentiles and z-scores</h3>
+    <p>
+      Pediatricians read both. A percentile is the rank in the reference distribution (50th = half
+      are above, half below). A z-score is the number of standard deviations from the median — it
+      keeps being informative past the edges of the chart (below the 3rd or above the 97th) where
+      percentile numbers bunch up. The
+      <a href="/lms-method/">LMS method</a> is the conversion in both directions.
+    </p>
+
+    <h3>Clinical thresholds</h3>
+    <p>
+      WHO defines &lt;−2 z-score (roughly the 2nd percentile) as the screening threshold for
+      moderate underweight or stunting, and &lt;−3 as severe. Above the curve, &gt;+2 WFL flags
+      overweight. These thresholds apply to WHO-defined growth failure and don't automatically
+      apply to an otherwise-healthy infant who's simply small or large.
+    </p>
+
+    <h3>What a single reading means (not much)</h3>
+    <p>
+      Infants jitter on the chart — they gain unevenly around feeds, illness, teething, and sleep
+      regressions. Pediatricians weight <em>trajectory</em> over point-in-time percentile: a baby
+      who tracks along the 10th consistently is usually fine; a baby who drops from the 75th to
+      the 10th over two visits is the one who gets evaluated.
+    </p>
+
+    <h3>Preterm infants use different charts</h3>
+    <p>
+      For infants born before 37 weeks, the
+      <a href="https://en.wikipedia.org/wiki/Fenton_growth_chart" rel="noopener">Fenton preterm
+      growth chart</a> or Intergrowth-21st is more appropriate, and corrected age (gestational
+      adjustment) is used in place of chronological age. WHO term-infant charts understate how
+      preterm babies are actually tracking.
+    </p>
+  </article>
+
+  <RelatedTools
+    links={[
+      { href: "/baby-percentile-calculator/", title: "Baby Percentile Calculator", description: "Compute percentile + z-score" },
+      { href: "/baby-growth-chart/", title: "Baby growth chart", description: "Parent-friendly version" },
+      { href: "/who-growth-chart/", title: "WHO Growth Chart", description: "The reference itself" },
+      { href: "/lms-method/", title: "LMS method", description: "How the math works" },
+      { href: "/weight-for-age/", title: "Weight-for-age", description: "Weight only" },
+      { href: "/height-for-age/", title: "Length-for-age", description: "Length only" },
+    ]}
+  />
+</Base>
