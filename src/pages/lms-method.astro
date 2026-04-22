@@ -1,0 +1,117 @@
+---
+import Base from "../layouts/Base.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "The LMS method: how growth percentiles are calculated",
+      url: "https://growthchartcalculator.com/lms-method/",
+      description:
+        "A practical explanation of the LMS method (Cole & Green, 1992) used by WHO and CDC to convert a raw measurement into a percentile and z-score.",
+      about: { "@type": "Thing", name: "LMS method" },
+      author: { "@type": "Organization", name: "Growth Chart Calculator" },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "LMS method", item: "https://growthchartcalculator.com/lms-method/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="The LMS Method — How Growth Percentiles Are Calculated"
+  description="A plain-English explanation of the LMS method (Cole & Green, 1992) used by WHO and CDC to turn a child's measurement into a percentile and z-score."
+  structuredData={structuredData}
+>
+  <article class="landing-intro long-form">
+    <h2>The LMS method</h2>
+    <p>
+      Growth charts look simple: you plot a point and read off a percentile. Under the hood, WHO
+      and CDC both use the same statistical technique — the LMS method, introduced by
+      <a href="https://pubmed.ncbi.nlm.nih.gov/1518328/" rel="noopener">Cole & Green in 1992</a>.
+      It's what lets a single reference table describe the entire distribution of a measurement
+      at every age.
+    </p>
+
+    <h3>The three LMS parameters</h3>
+    <p>
+      For every age and sex, the reference tables give three numbers:
+    </p>
+    <ul>
+      <li><strong>L</strong> — the Box-Cox power used to normalize the distribution's skewness.</li>
+      <li><strong>M</strong> — the median of the distribution (the 50th percentile value).</li>
+      <li><strong>S</strong> — the coefficient of variation (spread relative to the median).</li>
+    </ul>
+    <p>
+      These three numbers compress what would otherwise be a whole empirical distribution per age
+      into a smooth, differentiable model. Between tabulated ages, you linearly interpolate L, M,
+      and S.
+    </p>
+
+    <h3>From measurement to z-score</h3>
+    <p>
+      Given a measurement <code>X</code> and the L, M, S values for that child's age and sex:
+    </p>
+    <pre>z = ((X / M)^L − 1) / (L × S)     when L ≠ 0
+z = ln(X / M) / S                 when L → 0</pre>
+    <p>
+      The second form is the limiting case as L approaches zero — the Box-Cox transformation
+      degenerates into a log transformation. In implementations, we use the log form whenever
+      |L| &lt; 1e-8 to avoid numerical instability.
+    </p>
+
+    <h3>From z-score to percentile</h3>
+    <p>
+      Once you have a z-score (standard deviations from the median of the transformed distribution),
+      the percentile is just the standard normal cumulative distribution function applied to z.
+      Most implementations use the Abramowitz & Stegun 26.2.17 approximation, which is accurate to
+      about 7.5 × 10⁻⁸.
+    </p>
+
+    <h3>From percentile to measurement (drawing the curves)</h3>
+    <p>
+      To plot the 3rd through 97th percentile bands, we invert: start with a target z-score (e.g.
+      z = −1.881 for the 3rd percentile), solve the LMS equation for X:
+    </p>
+    <pre>X = M × (1 + L × S × z)^(1/L)     when L ≠ 0
+X = M × exp(S × z)                when L → 0</pre>
+    <p>
+      The inverse normal CDF we use is the Beasley-Springer-Moro rational approximation.
+    </p>
+
+    <h3>WHO vs CDC: same math, different tables</h3>
+    <p>
+      WHO publishes LMS tables from the Multicentre Growth Reference Study (0–60 months), which
+      followed ~8,400 children raised under optimal conditions in six countries. CDC publishes LMS
+      tables from NHANES surveys (0–240 months) representing the US population from the 1960s to
+      1990s. The LMS machinery is identical; the only difference is what population the L, M, S
+      values describe.
+    </p>
+
+    <h3>Reference implementations</h3>
+    <p>
+      This site's math is open-source (MIT) — see
+      <a href="/cdc-growth-chart/">CDC calculator</a> and
+      <a href="/who-growth-chart/">WHO calculator</a> for the live version. A small TypeScript
+      module (roughly 60 lines) handles interpolation, the Box-Cox / log branch, and the CDF
+      conversions.
+    </p>
+  </article>
+
+  <RelatedTools
+    links={[
+      { href: "/", title: "Full calculator", description: "Apply the LMS method to your own measurements" },
+      { href: "/who-growth-chart/", title: "WHO Growth Chart", description: "WHO reference, 0–60 months" },
+      { href: "/cdc-growth-chart/", title: "CDC Growth Chart", description: "CDC reference, 0–20 years" },
+      { href: "/weight-for-age/", title: "Weight-for-age", description: "Weight only" },
+      { href: "/height-for-age/", title: "Height-for-age", description: "Length/stature only" },
+    ]}
+  />
+</Base>

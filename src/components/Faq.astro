@@ -1,0 +1,21 @@
+---
+export interface QA {
+  q: string;
+  a: string;
+}
+export interface Props {
+  items: QA[];
+  heading?: string;
+}
+const { items, heading = "Frequently asked questions" } = Astro.props;
+---
+
+<section class="card faq">
+  <h2>{heading}</h2>
+  {items.map((item) => (
+    <details>
+      <summary>{item.q}</summary>
+      <p>{item.a}</p>
+    </details>
+  ))}
+</section>

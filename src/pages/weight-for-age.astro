@@ -1,0 +1,84 @@
+---
+import Base from "../layouts/Base.astro";
+import Calculator from "../components/Calculator.astro";
+import Faq from "../components/Faq.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const faq = [
+  {
+    q: "What does 'weight-for-age' mean?",
+    a: "Weight-for-age compares a child's weight to other children of the same age and sex, expressed as a percentile. The 50th percentile is the median — half the reference population weighs more, half weighs less at that age.",
+  },
+  {
+    q: "Is weight-for-age a good measure of nutrition?",
+    a: "It's a useful screen in the first 2 years but becomes less informative after that because it doesn't account for height. WHO only recommends weight-for-age as a primary indicator through 60 months. After 2 years, BMI-for-age or weight-for-height is preferred.",
+  },
+  {
+    q: "Why is my baby's percentile different at different visits?",
+    a: "Small fluctuations are normal — percentile is a snapshot. Babies can cross percentile lines in the first 18 months as they settle into their genetic trajectory (canalization). A sustained drop across two or more major bands across several visits is worth discussing with a pediatrician.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      name: "Weight-for-Age Calculator",
+      url: "https://growthchartcalculator.com/weight-for-age/",
+      description:
+        "Calculate your child's weight-for-age percentile using WHO (0–60mo) or CDC (0–20y) references. Free, private, runs in your browser.",
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Weight-for-age", item: "https://growthchartcalculator.com/weight-for-age/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Weight-for-Age Percentile Calculator — WHO & CDC"
+  description="Free weight-for-age percentile calculator for children 0–20 years. Uses WHO for under 24 months, CDC for 24+ months. 100% private."
+  structuredData={structuredData}
+>
+  <article class="landing-intro">
+    <h2>Weight-for-age calculator</h2>
+    <p>
+      Weight-for-age is the simplest growth indicator: it tells you where a child's weight sits
+      relative to other children of the same age and sex. It's most informative under 24 months,
+      when WHO recommends it as a primary measure. After 2 years, pediatricians usually look at
+      BMI-for-age alongside weight-for-age.
+    </p>
+    <p>
+      This calculator only asks for weight (length/height is hidden). It uses the WHO Child Growth
+      Standards for children under 24 months and the CDC 2000 growth charts for 24 months and
+      older. Switch to a specific reference via the Standard dropdown if your clinician prefers one.
+    </p>
+  </article>
+
+  <Calculator measurementTypes="weight" />
+
+  <Faq items={faq} />
+
+  <RelatedTools
+    links={[
+      { href: "/height-for-age/", title: "Height-for-age", description: "Length/stature only" },
+      { href: "/baby-percentile-calculator/", title: "Baby Calculator", description: "Weight and length combined" },
+      { href: "/", title: "Full calculator", description: "Both weight and height" },
+      { href: "/who-growth-chart/", title: "WHO Growth Chart", description: "WHO reference, 0–60 months" },
+      { href: "/cdc-growth-chart/", title: "CDC Growth Chart", description: "CDC reference, 0–20 years" },
+    ]}
+  />
+</Base>

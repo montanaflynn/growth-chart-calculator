@@ -1,0 +1,88 @@
+---
+import Base from "../layouts/Base.astro";
+import Calculator from "../components/Calculator.astro";
+import Faq from "../components/Faq.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const faq = [
+  {
+    q: "Why does the reference switch at 24 months?",
+    a: "Two reasons: at 24 months we switch from measuring length (lying down) to stature (standing), which affects the numbers by roughly 0.5–1 cm; and the WHO charts end at 60 months while CDC continues to 240 months. In the US, most pediatricians switch from WHO to CDC at the 2-year visit.",
+  },
+  {
+    q: "Should I use WHO or CDC for my toddler?",
+    a: "Between 24 and 60 months, both are valid. WHO describes a 'prescriptive' ideal growth trajectory; CDC describes how US children actually grew in the 1960s–1990s. WHO percentiles tend to run slightly lower for US toddlers. If your clinician uses a specific reference, stick with that; otherwise, either is fine.",
+  },
+  {
+    q: "What age range does this cover?",
+    a: "24 to 60 months (2 to 5 years). Before 24 months, see the baby calculator. After 60 months, only CDC reference data is available — use the child growth percentile page.",
+  },
+  {
+    q: "My toddler's height percentile is much lower than their weight percentile — is that a problem?",
+    a: "A large gap between weight and height percentiles can indicate over- or underweight, but toddler body composition is highly variable. If you're concerned, ask your pediatrician — they'll usually track BMI-for-age (a separate chart) from 24 months onward.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      name: "Toddler Percentile Calculator",
+      url: "https://growthchartcalculator.com/toddler-percentile-calculator/",
+      description:
+        "Calculate your toddler's weight and stature percentile (24–60 months) using WHO or CDC references. Free, private, runs in your browser.",
+      about: { "@type": "MedicalCondition", name: "Toddler growth assessment" },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Toddler Percentile Calculator", item: "https://growthchartcalculator.com/toddler-percentile-calculator/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Toddler Percentile Calculator (2–5 years) — Weight & Height"
+  description="Free calculator for your toddler's weight and stature percentiles from 24 to 60 months. WHO or CDC references. 100% private, runs in your browser."
+  structuredData={structuredData}
+>
+  <article class="landing-intro">
+    <h2>Toddler percentile calculator (2–5 years)</h2>
+    <p>
+      Track your toddler's growth against WHO or CDC references from 24 to 60 months. At 24 months
+      the measurement convention changes: length (lying) becomes stature (standing), and many US
+      clinics switch from the WHO to the CDC reference. This calculator handles both automatically.
+    </p>
+    <p>
+      The Standard dropdown defaults to "Auto" (WHO under 24mo, CDC from 24mo), which matches the
+      approach used in most pediatric guidelines. Select WHO or CDC explicitly if you want to lock
+      to one reference.
+    </p>
+  </article>
+
+  <Calculator />
+
+  <Faq items={faq} />
+
+  <RelatedTools
+    links={[
+      { href: "/baby-percentile-calculator/", title: "Baby Calculator", description: "0–24 months" },
+      { href: "/child-growth-percentile/", title: "Child Growth Percentile", description: "5–20 years" },
+      { href: "/cdc-growth-chart/", title: "CDC Growth Chart", description: "Locked to CDC reference" },
+      { href: "/height-for-age/", title: "Height-for-age", description: "Stature only" },
+      { href: "/weight-for-age/", title: "Weight-for-age", description: "Weight only" },
+    ]}
+  />
+</Base>

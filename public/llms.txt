@@ -1,0 +1,33 @@
+# Growth Chart Calculator
+
+A free, open-source, client-side calculator that converts a child's weight or length/height measurement into a growth percentile using WHO or CDC reference data. All computation happens in the browser — no data is uploaded and nothing is stored on any server.
+
+## How to use
+
+- Open https://growthchartcalculator.com/
+- Enter sex, birth date, measurement date, and weight (kg) and/or length/height (cm)
+- The page renders the percentile at the measurement and a growth curve showing the 3rd, 5th, 10th, 25th, 50th, 75th, 90th, 95th, and 97th percentile bands
+
+## What the calculator supports
+
+- Weight-for-age (0–240 months)
+- Length-for-age (lying, 0–24 months) and stature/height-for-age (standing, 24+ months)
+- WHO reference tables (0–60 months)
+- CDC reference tables (0–240 months)
+- An `auto` mode that uses WHO under 24 months and CDC at 24 months and older, matching common clinical practice
+
+## Methodology
+
+- Conversion uses the LMS method (Cole & Green, 1992). Z-scores are computed with the Box-Cox form when L ≠ 0 and the log form when |L| < 1e-8.
+- Percentiles come from the standard normal CDF (Abramowitz & Stegun 26.2.17); inverse CDF for percentile bands uses Beasley-Springer-Moro.
+- Age in months is computed as days / 30.4375.
+- WHO CSVs (split by sex) and CDC CSVs (combined-sex with Sex column) are normalized to a single (month, L, M, S) shape before interpolation.
+
+## Privacy
+
+- 100% client-side. No backend, no analytics on measurement data, no cookies tied to inputs.
+- Form state is saved only in the user's own browser localStorage so the page reloads with their last values.
+
+## License
+
+- MIT license. Reference data originates from WHO and CDC public releases.

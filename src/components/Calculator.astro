@@ -1,0 +1,105 @@
+---
+export interface Props {
+  presetStandard?: "auto" | "who" | "cdc";
+  measurementTypes?: "both" | "weight" | "height";
+}
+
+const {
+  presetStandard,
+  measurementTypes = "both",
+} = Astro.props;
+---
+
+<form
+  id="calc-form"
+  class="card"
+  data-preset-standard={presetStandard}
+  data-measurement-types={measurementTypes === "both" ? undefined : measurementTypes}
+>
+  <div class="grid">
+    <label>Standard
+      <select name="standard">
+        <option value="auto">Auto</option>
+        <option value="who">WHO (0–60m)</option>
+        <option value="cdc">CDC (0–240m)</option>
+      </select>
+    </label>
+    <label>Sex
+      <select name="sex">
+        <option value="boy">Boy</option>
+        <option value="girl">Girl</option>
+      </select>
+    </label>
+    <label>Birth date
+      <input type="date" name="birth_date" required />
+    </label>
+    <label>
+      <span class="label-row">Measurement date
+        <button type="button" class="link-btn" id="set-today">Today</button>
+      </span>
+      <input type="date" name="measurement_date" required />
+    </label>
+    <label>Weight (kg)
+      <input type="number" name="weight" step="0.1" min="0.1" placeholder="optional" />
+    </label>
+    <label>Length / Height (cm)
+      <input type="number" name="height" step="0.1" min="0.1" placeholder="optional" />
+    </label>
+  </div>
+  <div class="form-actions">
+    <button type="submit">Calculate</button>
+    <button type="button" id="print-btn" class="secondary-btn hidden">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      Print
+    </button>
+    <p class="small" id="error-msg" role="alert"></p>
+  </div>
+</form>
+
+<section id="print-inputs" class="print-only">
+  <h2>Growth measurement</h2>
+  <dl class="print-dl">
+    <div><dt>Sex</dt><dd data-slot="sex">—</dd></div>
+    <div><dt>Birth date</dt><dd data-slot="birth_date">—</dd></div>
+    <div><dt>Measurement date</dt><dd data-slot="measurement_date">—</dd></div>
+    <div><dt>Standard</dt><dd data-slot="standard">—</dd></div>
+  </dl>
+</section>
+
+<section id="results" class="hidden"></section>
+
+<template id="summary-template">
+  <article class="card summary-card">
+    <div class="summary-stats" data-slot="stats"></div>
+  </article>
+</template>
+<template id="summary-stat-template">
+  <div class="summary-stat">
+    <div class="summary-stat-label" data-slot="label"></div>
+    <div class="summary-stat-value">
+      <span class="summary-stat-number" data-slot="percentile"></span><span class="summary-stat-suffix" data-slot="suffix"></span>
+    </div>
+    <div class="summary-stat-context" data-slot="context"></div>
+  </div>
+</template>
+<template id="result-template">
+  <article class="card result-card">
+    <div class="result-header">
+      <h2 data-slot="title"></h2>
+      <div class="summary" data-slot="summary"></div>
+    </div>
+    <div class="chart-wrap">
+      <canvas class="screen-chart" data-slot="chart"></canvas>
+      <canvas class="print-chart" data-slot="print-chart" width="730" height="336"></canvas>
+    </div>
+    <details><summary>Raw JSON</summary><pre data-slot="json"></pre></details>
+  </article>
+</template>
+
+<script>
+  import "../main.ts";
+</script>

@@ -1,0 +1,98 @@
+---
+import Base from "../layouts/Base.astro";
+import Calculator from "../components/Calculator.astro";
+import Faq from "../components/Faq.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const faq = [
+  {
+    q: "When should I use CDC growth charts instead of WHO?",
+    a: "In the United States, the CDC growth charts are the standard for children aged 2 years and older. Most pediatric clinics use WHO from birth to 24 months, then switch to CDC for weight-for-age and stature-for-age from 2–20 years, and CDC BMI-for-age from 2+ years.",
+  },
+  {
+    q: "What age range do CDC charts cover?",
+    a: "The CDC growth charts used here cover 0–240 months (0–20 years) for weight-for-age, stature-for-age, and weight-for-length/stature. They were originally published in 2000 and are derived from NHANES survey data representing the US population.",
+  },
+  {
+    q: "Are CDC charts descriptive or prescriptive?",
+    a: "CDC charts are descriptive — they describe how US children actually grew in the 1960s–1990s. WHO charts are prescriptive — they describe how children should grow under optimal conditions. This is why WHO and CDC give slightly different percentiles, especially below 24 months.",
+  },
+  {
+    q: "What measurements does the CDC calculator support?",
+    a: "Weight-for-age (0–240 months) and length-for-age (0–24 months, lying) / stature-for-age (24+ months, standing). BMI-for-age support is planned for a future update.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      name: "CDC Growth Chart Calculator",
+      url: "https://growthchartcalculator.com/cdc-growth-chart/",
+      description:
+        "Calculate your child's CDC growth percentile for weight-for-age and stature-for-age (0–20 years). Uses the 2000 CDC Growth Charts for the United States.",
+      about: {
+        "@type": "MedicalCondition",
+        name: "Child growth assessment",
+      },
+      citation: {
+        "@type": "CreativeWork",
+        name: "CDC Growth Charts",
+        url: "https://www.cdc.gov/growthcharts/",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "CDC Growth Chart", item: "https://growthchartcalculator.com/cdc-growth-chart/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="CDC Growth Chart Calculator (0–20 years) — Weight & Height Percentiles"
+  description="Free CDC growth percentile calculator. Plots your child's weight-for-age and stature-for-age against the 2000 CDC Growth Charts. 100% private, runs in your browser."
+  structuredData={structuredData}
+>
+  <article class="landing-intro">
+    <h2>CDC growth chart calculator</h2>
+    <p>
+      The CDC growth charts are the reference standard for US children aged 2 years and older. They
+      describe how a nationally representative sample of children grew between the 1960s and 1990s
+      and are what most American pediatric clinics use past the second birthday.
+    </p>
+    <p>
+      Enter birth date, measurement date, sex, and weight and/or stature below. The calculator
+      plots the measurement against the 3rd through 97th percentile bands and returns the exact
+      percentile via the LMS method. The calculator opens with CDC pre-selected — switch to
+      <a href="/who-growth-chart/">WHO</a> via the Standard dropdown (or the dedicated page)
+      for 0–24 months, where WHO's prescriptive standards are recommended.
+    </p>
+  </article>
+
+  <Calculator presetStandard="cdc" />
+
+  <Faq items={faq} />
+
+  <RelatedTools
+    links={[
+      { href: "/who-growth-chart/", title: "WHO Growth Chart Calculator", description: "WHO standard, 0–60 months" },
+      { href: "/toddler-percentile-calculator/", title: "Toddler Percentile Calculator", description: "24–60 months" },
+      { href: "/child-growth-percentile/", title: "Child Growth Percentile", description: "5–20 years" },
+      { href: "/weight-for-age/", title: "Weight-for-age Calculator", description: "Weight percentile only" },
+      { href: "/lms-method/", title: "How percentiles are calculated", description: "LMS method explainer" },
+    ]}
+  />
+</Base>

@@ -1,0 +1,88 @@
+---
+import Base from "../layouts/Base.astro";
+import Calculator from "../components/Calculator.astro";
+import Faq from "../components/Faq.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const faq = [
+  {
+    q: "What age range does this cover?",
+    a: "5 to 20 years (60–240 months). The CDC growth charts are the only reference that covers this range; WHO's charts stop at 60 months.",
+  },
+  {
+    q: "Should I use BMI for older children?",
+    a: "Yes — from age 2 onward, BMI-for-age is the standard for assessing weight status in pediatrics. This calculator currently shows weight-for-age and stature-for-age; BMI-for-age is planned for a future update.",
+  },
+  {
+    q: "My child's growth slowed at puberty — is that normal?",
+    a: "Absolutely. Growth velocity fluctuates a lot around puberty, and early vs. late puberty can shift percentile lines temporarily. Pediatricians look at bone age and pubertal staging alongside the growth chart to interpret changes.",
+  },
+  {
+    q: "How tall will my child be?",
+    a: "Mid-parental height gives a rough estimate: for a boy, (dad's height + mom's height + 13 cm) / 2, and for a girl, (dad's height + mom's height − 13 cm) / 2, ±8 cm. Current percentile tracking + bone age is more accurate than this calculator can provide.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      name: "Child Growth Percentile Calculator",
+      url: "https://growthchartcalculator.com/child-growth-percentile/",
+      description:
+        "Calculate your child's weight and stature percentile from 5 to 20 years. Uses the CDC 2000 growth charts. Free and private.",
+      about: { "@type": "MedicalCondition", name: "Child growth assessment" },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Child Growth Percentile", item: "https://growthchartcalculator.com/child-growth-percentile/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Child Growth Percentile (5–20 years) — CDC Weight & Height"
+  description="Free calculator for your child's weight and stature percentiles from 5 to 20 years, using the CDC 2000 growth charts. 100% private, runs in your browser."
+  structuredData={structuredData}
+>
+  <article class="landing-intro">
+    <h2>Child growth percentile (5–20 years)</h2>
+    <p>
+      From 5 years through the end of growth (around 20 years), the CDC 2000 growth charts are the
+      standard reference in the US. WHO's prescriptive standards only go up to 60 months, so CDC is
+      what your pediatrician will use from school age onward.
+    </p>
+    <p>
+      Enter birth date, measurement date, sex, and weight and/or stature (standing height). The
+      calculator defaults to "Auto", which selects CDC at this age. Bring consistent measurement
+      technique to each check-in so the percentile trend is meaningful.
+    </p>
+  </article>
+
+  <Calculator />
+
+  <Faq items={faq} />
+
+  <RelatedTools
+    links={[
+      { href: "/cdc-growth-chart/", title: "CDC Growth Chart", description: "Locked to CDC reference" },
+      { href: "/toddler-percentile-calculator/", title: "Toddler Calculator", description: "2–5 years" },
+      { href: "/weight-for-age/", title: "Weight-for-age", description: "Weight only" },
+      { href: "/height-for-age/", title: "Height-for-age", description: "Stature only" },
+      { href: "/lms-method/", title: "LMS method", description: "How percentiles are calculated" },
+    ]}
+  />
+</Base>

@@ -1,0 +1,38 @@
+---
+import Base from "../layouts/Base.astro";
+import Calculator from "../components/Calculator.astro";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Growth Chart Calculator",
+  url: "https://growthchartcalculator.com/",
+  description:
+    "Free, open-source, client-side calculator that converts a child's weight or height measurement into a WHO or CDC growth percentile. Nothing leaves the browser.",
+  applicationCategory: "HealthApplication",
+  operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript",
+  isAccessibleForFree: true,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  citation: [
+    {
+      "@type": "CreativeWork",
+      name: "WHO Child Growth Standards",
+      url: "https://www.who.int/tools/child-growth-standards",
+    },
+    {
+      "@type": "CreativeWork",
+      name: "CDC Growth Charts",
+      url: "https://www.cdc.gov/growthcharts/",
+    },
+  ],
+};
+---
+
+<Base
+  title="Growth Chart Calculator — WHO & CDC Percentiles"
+  description="Free, private, client-side growth chart calculator. Convert a child's weight or height into a WHO or CDC percentile. Nothing leaves your browser."
+  structuredData={structuredData}
+>
+  <Calculator />
+</Base>

@@ -1,0 +1,90 @@
+---
+import Base from "../layouts/Base.astro";
+import Calculator from "../components/Calculator.astro";
+import Faq from "../components/Faq.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const faq = [
+  {
+    q: "What age range does this cover?",
+    a: "Birth to 24 months. The calculator uses the WHO Child Growth Standards by default under 24 months — that's what WHO, AAP, and NHS recommend for infants.",
+  },
+  {
+    q: "Should I measure length lying down or standing?",
+    a: "Lying down (recumbent length) for under 24 months. WHO length-for-age charts assume recumbent measurement. Stature (standing) is used from 24 months onward.",
+  },
+  {
+    q: "My baby dropped two percentile bands — should I worry?",
+    a: "A crossing of more than two major percentile lines (e.g. 75th down to below 25th) over a few visits is a reason to bring it up with your pediatrician, but many healthy babies cross percentiles in the first 18 months as they 'canalize' to their genetic trajectory. A single measurement in isolation rarely means much.",
+  },
+  {
+    q: "Is this accurate for premature babies?",
+    a: "No — for babies born before 37 weeks, you need to adjust for gestational age (corrected age), and under roughly 3 months corrected age the Fenton or Intergrowth-21st preterm charts are more appropriate. This calculator uses term-infant WHO/CDC data.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      name: "Baby Percentile Calculator",
+      url: "https://growthchartcalculator.com/baby-percentile-calculator/",
+      description:
+        "Calculate your baby's weight and length percentile (0–24 months) using the WHO Child Growth Standards. Free, private, runs in your browser.",
+      about: { "@type": "MedicalCondition", name: "Infant growth assessment" },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Baby Percentile Calculator", item: "https://growthchartcalculator.com/baby-percentile-calculator/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Baby Percentile Calculator (0–24 months) — Weight & Length"
+  description="Free calculator for your baby's weight and length percentiles from birth to 24 months. Uses the WHO Child Growth Standards. 100% private, runs in your browser."
+  structuredData={structuredData}
+>
+  <article class="landing-intro">
+    <h2>Baby percentile calculator (0–24 months)</h2>
+    <p>
+      Get your baby's weight and length percentiles from birth to 24 months using the WHO Child
+      Growth Standards — the reference recommended by WHO, AAP, and NHS for infants. Percentiles
+      compare your baby to a healthy population of the same age and sex; the 50th percentile is
+      the median.
+    </p>
+    <p>
+      Enter birth date, measurement date, sex, and weight and/or length below. Length should be
+      measured lying down (recumbent length), not standing. The calculator defaults to "Auto",
+      which uses WHO under 24 months and switches to CDC after; you can change this in the
+      Standard dropdown if your clinician prefers a different reference.
+    </p>
+  </article>
+
+  <Calculator />
+
+  <Faq items={faq} />
+
+  <RelatedTools
+    links={[
+      { href: "/who-growth-chart/", title: "WHO Growth Chart", description: "Locked to WHO reference" },
+      { href: "/toddler-percentile-calculator/", title: "Toddler Calculator", description: "24–60 months" },
+      { href: "/weight-for-age/", title: "Weight-for-age", description: "Weight only" },
+      { href: "/height-for-age/", title: "Length/height-for-age", description: "Length only" },
+      { href: "/lms-method/", title: "LMS method", description: "How the math works" },
+    ]}
+  />
+</Base>

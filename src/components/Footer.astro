@@ -1,0 +1,54 @@
+---
+const groups = [
+  {
+    heading: "Calculators",
+    links: [
+      { href: "/", title: "Home" },
+      { href: "/who-growth-chart/", title: "WHO growth chart" },
+      { href: "/cdc-growth-chart/", title: "CDC growth chart" },
+    ],
+  },
+  {
+    heading: "By age",
+    links: [
+      { href: "/baby-percentile-calculator/", title: "Baby (0–24 mo)" },
+      { href: "/toddler-percentile-calculator/", title: "Toddler (24–60 mo)" },
+      { href: "/child-growth-percentile/", title: "Child (5–20 yr)" },
+    ],
+  },
+  {
+    heading: "By measurement",
+    links: [
+      { href: "/weight-for-age/", title: "Weight for age" },
+      { href: "/height-for-age/", title: "Height for age" },
+    ],
+  },
+  {
+    heading: "Learn",
+    links: [
+      { href: "/lms-method/", title: "LMS method" },
+    ],
+  },
+];
+---
+
+<footer class="site-footer">
+  <div class="site-footer-grid">
+    {groups.map((group) => (
+      <div class="site-footer-group">
+        <h3>{group.heading}</h3>
+        <ul>
+          {group.links.map((link) => (
+            <li><a href={link.href}>{link.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+  <div class="site-footer-meta">
+    <p>
+      Growth Chart Calculator &mdash; free and open source (MIT).
+      Your data stays in your browser.
+    </p>
+  </div>
+</footer>

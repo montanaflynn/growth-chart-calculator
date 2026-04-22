@@ -1,0 +1,24 @@
+---
+export interface Link {
+  href: string;
+  title: string;
+  description: string;
+}
+export interface Props {
+  links: Link[];
+  heading?: string;
+}
+const { links, heading = "Related tools" } = Astro.props;
+---
+
+<nav class="card related">
+  <h2>{heading}</h2>
+  <ul>
+    {links.map((l) => (
+      <li>
+        <a href={l.href}><strong>{l.title}</strong></a>
+        <span>{l.description}</span>
+      </li>
+    ))}
+  </ul>
+</nav>

@@ -1,0 +1,83 @@
+---
+import Base from "../layouts/Base.astro";
+import Calculator from "../components/Calculator.astro";
+import Faq from "../components/Faq.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+
+const faq = [
+  {
+    q: "What's the difference between length and stature?",
+    a: "Length is measured lying down (supine); stature is measured standing. Convention switches at 24 months — under 24 months we measure length, from 24 months onward we measure stature (height). The same child measured both ways differs by roughly 0.5–1 cm.",
+  },
+  {
+    q: "What does 'height-for-age' tell me?",
+    a: "Height-for-age reflects long-term nutritional status and genetic growth potential. Short height-for-age (low percentile) that tracks over time is called 'stunting' when it's nutritional, or 'short stature' more broadly. Height-for-age is less volatile than weight-for-age and is a strong indicator of overall child health.",
+  },
+  {
+    q: "Is height strongly inherited?",
+    a: "Yes — adult height is roughly 80% heritable. Mid-parental height predicts adult height within about ±8 cm. Environment (especially early nutrition) determines how close a child gets to their genetic ceiling.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      name: "Height-for-Age Calculator",
+      url: "https://growthchartcalculator.com/height-for-age/",
+      description:
+        "Calculate your child's length- or stature-for-age percentile using WHO (0–60mo) or CDC (0–20y) references. Free and private.",
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://growthchartcalculator.com/" },
+        { "@type": "ListItem", position: 2, name: "Height-for-age", item: "https://growthchartcalculator.com/height-for-age/" },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Height-for-Age Percentile Calculator — WHO & CDC"
+  description="Free length/height-for-age percentile calculator for children 0–20 years. WHO under 24 months (length), CDC from 24 months (stature). 100% private."
+  structuredData={structuredData}
+>
+  <article class="landing-intro">
+    <h2>Height-for-age calculator</h2>
+    <p>
+      Height-for-age (length-for-age for infants under 24 months) is one of the most stable growth
+      indicators — it moves slowly and reflects long-term nutrition and genetic potential. It's
+      what pediatricians track to screen for stunting, short stature, and growth failure.
+    </p>
+    <p>
+      This calculator only asks for length/height. Measurement convention switches at 24 months
+      (supine length becomes standing stature); the calculator picks the correct reference
+      automatically when the Standard is set to "Auto".
+    </p>
+  </article>
+
+  <Calculator measurementTypes="height" />
+
+  <Faq items={faq} />
+
+  <RelatedTools
+    links={[
+      { href: "/weight-for-age/", title: "Weight-for-age", description: "Weight only" },
+      { href: "/baby-percentile-calculator/", title: "Baby Calculator", description: "Weight and length" },
+      { href: "/", title: "Full calculator", description: "Both weight and height" },
+      { href: "/who-growth-chart/", title: "WHO Growth Chart", description: "WHO reference, 0–60 months" },
+      { href: "/cdc-growth-chart/", title: "CDC Growth Chart", description: "CDC reference, 0–20 years" },
+    ]}
+  />
+</Base>
